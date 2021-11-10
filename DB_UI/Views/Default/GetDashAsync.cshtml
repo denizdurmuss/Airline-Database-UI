@@ -1,0 +1,337 @@
+﻿
+@{
+    ViewBag.Title = "GetDashAsync";
+    Layout = "~/Views/_Shared_view.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Info boxes -->
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Toplam Müşteri Sayısı</span>
+                    <span class="info-box-number">
+                        @Model.Toplam_Customer_sayisi
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Toplam FFC Sayısı</span>
+                    <span class="info-box-number">@Model.Toplam_FFC_sayisi</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <!-- fix for small devices only -->
+        <div class="clearfix hidden-md-up"></div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="info-box mb-3">
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-plane"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Toplam Airline Sayısı</span>
+                    <span class="info-box-number">@Model.ToplamAirline_Sayisi</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-8">
+            <!-- TABLE: FFC ORDERS -->
+            <div class="card">
+                <div class="card-header border-transparent">
+                    <h3 class="card-title">FFC Müşteriler</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <thead>
+                                <tr>
+                                    <th>Ayrıntılar</th>
+                                    <th>Müşteri İsmi</th>
+                                    <th>FFC Türü</th>
+                                    <th>Credit Point</th>
+                                    <th>Havayolu İsimleri</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Customer_list)
+                                {
+                                <tr>
+                                    <td><a href="/Default/Details/@item.Customer_id">@item.Customer_name</a></td>
+                                    <td>@item.Customer_name</td>
+                                    @if (@item.FFC_type == 1)
+                                    {
+                                        <td><span class="badge badge-secondary">FFC Bronz</span></td>
+                                    }
+                                    else if (@item.FFC_type == 2)
+                                    {
+                                        <td><span class="badge badge-info">FFC Silver</span></td>
+                                    }
+                                    else if (@item.FFC_type == 3)
+                                    {
+                                        <td><span class="badge badge-warning">FFC Gold</span></td>
+                                    }
+                                    <td>
+                                        <div class="sparkbar" data-color="#00a65a" data-height="20">@item.FFC_credit_point</div>
+                                    </td>
+                                    <td>
+                                        <div class="sparkbar" data-color="#00a65a" data-height="20">@item.Airline_name</div>
+                                    </td>
+                                </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+                </div>
+                <!-- /.card-footer -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- PIE CHART -->
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">FFC Dağılımları</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- PIE CHART- thyChart -->
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">Türk Hava Yolları FFC Dağılımı</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="thyChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- PIE CHART-pegasusChart -->
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">Pegasus FFC Dağılımı</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="pegasusChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- PIE CHART-onurChart -->
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">OnurAirline FFC Dağılımı</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="onurChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+           
+        </div>
+
+        <div class="col-md-4">
+           
+        </div>
+
+        <div class="col-md-4">
+          
+        </div>
+    </div>
+</div>
+<!-- ChartJS -->
+<script src="~/src/plugins/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap 4 -->
+<script src="~/src/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="~/src/plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/src/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/src/dist/js/demo.js"></script>
+
+<script>
+    $(function () {
+
+
+        var donutData = {
+            labels: [
+
+                   'Bronz FCC Müşteriler= '+@Model.ToplamBronze,
+                'Silver FCC Müşteriler= '+@Model.ToplamSilver,
+                'Gold FCC Müşteriler= '+@Model.ToplamGold
+            ],
+            datasets: [
+                {
+                    data: [@Model.ToplamBronze, @Model.ToplamSilver, @Model.ToplamGold],
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
+                }
+            ]
+        }
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieData = donutData;
+        var pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        })
+
+
+        var onurData = {
+            labels: [
+                 'Bronz FCC Müşteriler= '+@Model.OnurAir_Bronze,
+                'Silver FCC Müşteriler= '+@Model.OnurAir_Silver,
+                'Gold FCC Müşteriler= '+@Model.OnurAir_Gold
+            ],
+            datasets: [
+                {
+                    data: [@Model.OnurAir_Bronze, @Model.OnurAir_Silver, @Model.OnurAir_Gold],
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12' ],
+                }
+            ]
+        }
+        var onurChartCanvas = $('#onurChart').get(0).getContext('2d')
+        var onurChart = new Chart(onurChartCanvas, {
+            type: 'pie',
+            data: onurData,
+            options: pieOptions
+        })
+
+
+
+          var thyData = {
+            labels: [
+                'Bronz FCC Müşteriler= '+@Model.THY_Bronze,
+                'Silver FCC Müşteriler= '+@Model.THY_Silver,
+                'Gold FCC Müşteriler= '+@Model.THY_Gold
+            ],
+            datasets: [
+                {
+                    data: [@Model.THY_Bronze, @Model.THY_Silver, @Model.THY_Gold],
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12' ],
+                }
+            ]
+        }
+        var thyChartCanvas = $('#thyChart').get(0).getContext('2d')
+        var thyChart = new Chart(thyChartCanvas, {
+            type: 'pie',
+            data: thyData,
+            options: pieOptions
+        })
+
+
+        var pegasusData = {
+            labels: [
+                'Bronz FCC Müşteriler= '+@Model.Pegasus_Bronze,
+                'Silver FCC Müşteriler= '+@Model.Pegasus_Silver,
+                'Gold FCC Müşteriler= '+@Model.Pegasus_Gold
+            ],
+            datasets: [
+                {
+                    data: [@Model.Pegasus_Bronze, @Model.Pegasus_Silver, @Model.Pegasus_Gold],
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12' ],
+                }
+            ]
+        }
+        var pegasusChartCanvas = $('#pegasusChart').get(0).getContext('2d')
+        var pegasusChart = new Chart(pegasusChartCanvas, {
+            type: 'pie',
+            data: pegasusData,
+            options: pieOptions
+        })
+
+
+    })
+</script>

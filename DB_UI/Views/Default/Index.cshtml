@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Shared_view.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+           
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0" style="height: 800px;">
+                <!-- testtstststst-->
+             
+                <!-- sonunda -->
+                <table class="table table-head-fixed text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Müşteriler</th>
+                            <th>Pasaport Numarları</th>
+                            <th>E-mail</th>
+                            <th>Telefon Numarası</th>
+                            <th>Ülke</th>
+                            <th>Şehir</th>
+                            <th>Ayrıntılar-Düzenle-Sil</th>
+
+
+                            <p align="right"> <button id="ekle" type="button" class="btn btn-success">Yeni Müşteri Ekle</button></p>
+
+                            <script>
+                                var btnSelam = document.getElementById("ekle");
+                                btnSelam.onclick = Create()
+                            </script>
+                            <script>
+                                document.getElementById("ekle")
+                                    .onclick = function () {
+                                        window.setTimeout(function () { location.href = 'http://localhost:53984/Default/CreateAsync'; }, 100);
+                                    };
+                            </script>
+                        </tr>
+                    </thead>
+                 
+                    <tbody>
+                      
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.Customer_id</td>
+                            <td>@item.Customer_name</td>
+                            <td>@item.Pasaport_number</td>
+                            <td>@item.Customer_email</td>
+                            <td>@item.Customer_phone</td>
+                            <td>@item.Customer_country</td>
+                            <td>@item.Customer_adress</td>
+                         
+
+                            <td>
+                                <div class="btn-group">
+
+                                    <button id="ayrıntılar" type="button" class="btn btn-warning" onClick="parent.location='http://localhost:53984/Default/Details/'+@item.Customer_id">Ayrıntılar</button>
+
+                                    &ensp;
+                                    <button id="düzenle" type="button" class="btn btn-info" onClick="parent.location='http://localhost:53984/Default/Edit/'+@item.Customer_id">Düzenle</button>
+                                    &ensp;
+                                   
+
+                                    <button id="sil" type="button" class="btn btn-danger" onClick="parent.location='http://localhost:53984/Default/Delete/'+@item.Customer_id">Sil</button>
+
+
+                                </div>
+                            </td>
+                        </tr>
+                        }
+
+                    
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>

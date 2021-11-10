@@ -1,0 +1,66 @@
+﻿@model DB_UI.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/_Shared_view.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_adress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pasaport_number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pasaport_number)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
